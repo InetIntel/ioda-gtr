@@ -85,7 +85,7 @@ that the script will be writing to).
     you run the script.
 
  2. Add the following entry to the list of `templates`:
-       `"google_tr.*.*.*.* measurement.continent_code.country_code.product.field"
+       `"google_tr.*.*.*.* measurement.continent_code.country_code.product.field"`
 
 Any data points fetched by this script should now appear in your Influx
 database under the `google_tr` measurement.
