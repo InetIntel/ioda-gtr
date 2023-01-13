@@ -201,15 +201,15 @@ def fetchData(trafrepo, start_time, end_time, productid, region, saved):
     # in a single batch, so we will save our fetched data into a dictionary
     # keyed by timestamp. Once we've fetched everything, then we can walk
     # through that dictionary to emit the data in timestamp order.
-    for e in fetched.iteritems():
-        ts = int(e[0].timestamp())
+    for k,v in fetched.items():
+        ts = int(k.timestamp())
 
         if ts not in saved:
             saved[ts] = []
 
         # The traffic data is stored as a normalised float (with 10 d.p. of
         # precision -- we'd rather deal with integers so scale it up
-        saved[ts].append((key, int(10000000000 * e[1])))
+        saved[ts].append((key, int(10000000000 * v)))
 
     return 1
 
