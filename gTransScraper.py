@@ -43,7 +43,7 @@
 # Author: Shane Alcock <shane@alcock.co.nz>
 
 import _pytimeseries
-import datetime, sys, argparse, logging
+import datetime, sys, argparse, logging, time
 
 import netanalysis.traffic.data.api_repository as gapi
 from netanalysis.traffic.data import model
@@ -194,6 +194,7 @@ def fetchData(trafrepo, start_time, end_time, productid, region, saved):
                 region, productid.name, str(error))
         return -1
 
+    time.sleep(0.1)
     if fetched.empty:
         return 0
 
@@ -210,7 +211,6 @@ def fetchData(trafrepo, start_time, end_time, productid, region, saved):
         # The traffic data is stored as a normalised float (with 10 d.p. of
         # precision -- we'd rather deal with integers so scale it up
         saved[ts].append((key, int(10000000000 * v)))
-
     return 1
 
 def main(args):
@@ -253,6 +253,7 @@ def main(args):
         starttime = endtime - datetime.timedelta(days=1)
 
     for p in products:
+        print(p, starttime, file=sys.stderr)
         for r in regions:
             ret = fetchData(trafrepo, starttime, endtime, p, r, datadict)
 
